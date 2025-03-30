@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SuperHelper Front-End
 
-## Getting Started
+## Description
 
-First, run the development server:
+This repository contains the user interface for the **SuperHelper** project, a decentralized application enabling users to create, accept, complete, and rate paid jobs leveraging by the Ethereum blockchain.
+
+The front-end uses:
+
+- **Next.js v14**
+- **TypeScript**
+- **React**
+- **Wagmi & Viem (for blockchain integration)**
+
+This interface enables interaction with the `SuperHelper` smart contract.
+
+---
+
+## Quick Start
+
+### 1. Clone the repository
+
+```bash
+git clone <frontend_repository_url>
+cd <your_frontend_folder_name>
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Create `.env.local` file
+
+Create a `.env.local` file at the root of the project and fill in the following variables:
+
+```env
+// TODO: To fill
+```
+
+---
+
+## Run in development mode
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the live application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Smart Contract Interactions
 
-## Learn More
+The frontend communicates with the `SuperHelper` smart contract, which supports the following operations:
 
-To learn more about Next.js, take a look at the following resources:
+- **Registration** of new users.
+- **Creation, assignment, and full management** of token-paid jobs (HELP).
+- Task status follow-up (**created, assigned, completed, canceled**).
+- Rewarding users with badges (BRONZE, SILVER, GOLD).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Events available via smart contract:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Event                          | Description                                                    |
+|--------------------------------|----------------------------------------------------------------|
+| `FirstRegistration`            | Issued during the very first registration of a user            |
+| `JobAdded`                     | When a new job is created                                      |
+| `JobTaken`                     | When a job is taken by a user                                  |
+| `JobIsCompletedAndPaid`        | Job successfully completed and payment issued                  |
+| `JobIsCompletedButNotPaid`     | Job completed but payment not issued due to poor rating        |
+| `JobCanceled`                  | When the creator cancels their job                             |
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License.
