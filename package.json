@@ -10,22 +10,34 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.2",
+    "@rainbow-me/rainbowkit": "^2.2.4",
+    "@tanstack/react-query": "^5.71.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.486.0",
+    "next": "14.2.24",
+    "next-themes": "^0.4.6",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.24"
+    "sonner": "^2.0.2",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss-animate": "^1.0.7",
+    "viem": "^2.24.2",
+    "wagmi": "^2.14.15"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.24",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^8.0.7",
-    "semantic-release": "^21.1.1"
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.24",
+    "postcss": "^8",
+    "semantic-release": "^21.1.1",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }
