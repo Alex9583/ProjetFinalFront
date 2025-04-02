@@ -3,7 +3,7 @@ import {ConnectButton} from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import logo from "@/app/public/logo.png";
 import {useGetHelperTokenBalance} from "@/hooks/useHelperTokenActions";
-import {useContractAddress} from "@/contexts/ContractsInfoContext";
+import {useContractInfo} from "@/contexts/ContractsInfoContext";
 import {useAccount} from "wagmi";
 import { Badge } from "@/components/ui/badge"
 import { Loader, CircleX } from 'lucide-react';
@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import {formatBalance} from "@/utils/formatUtils";
 
 const Header = () => {
-    const { helperTokenAddress } = useContractAddress();
+    const { helperTokenAddress } = useContractInfo();
     const { isConnected, address } = useAccount();
     const { balance, isLoading, error, isError } = useGetHelperTokenBalance(helperTokenAddress, address);
 
@@ -28,7 +28,7 @@ const Header = () => {
         <div className="flex justify-between items-center p-5">
             <Image src={logo} width="50" height="50" alt="logo" />
             <div className={"flex items-center"}>
-                {isConnected && <p>{displayBalance()}</p>}
+                {isConnected && displayBalance()}
                 <ConnectButton showBalance={false}/>
             </div>
         </div>

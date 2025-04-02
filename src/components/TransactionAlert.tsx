@@ -1,7 +1,7 @@
-import type {FC} from "react";
+import { FC, useEffect, useState } from "react";
 import { type BaseError } from 'wagmi';
-import {Alert, AlertDescription, AlertTitle} from "./ui/alert";
-import {RocketIcon, TriangleAlertIcon} from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { RocketIcon, TriangleAlertIcon } from "lucide-react";
 
 type TransactionAlertProps = {
   hash?: string;
@@ -11,39 +11,61 @@ type TransactionAlertProps = {
 };
 
 const TransactionAlert: FC<TransactionAlertProps> = ({ hash, isConfirming, isConfirmed, error }) => {
+
+  const [showSuccess, setShowSuccess] = useState<boolean>(false);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    if (isConfirmed) {
+      setShowSuccess(true);
+      timer = setTimeout(() => {
+        setShowSuccess(false);
+      }, 5000);
+    }
+
+    return () => clearTimeout(timer);
+
+  }, [isConfirmed]);
+
   return (
       <>
-        {hash &&
+        {hash && !isConfirmed && (
             <Alert className="bg-lime-200 mt-5 mb-5">
-              <RocketIcon className="h-4 w-4"/>
+              <RocketIcon className="h-4 w-4" />
               <AlertTitle>Information</AlertTitle>
               <AlertDescription>
-                Hash de la transaction : {hash}
+                Transaction hash : {hash}
               </AlertDescription>
             </Alert>
-        }
-        {isConfirming &&
+        )}
+
+        {isConfirming && (
             <Alert className="bg-yellow-200 mt-5 mb-5">
-              <RocketIcon className="h-4 w-4"/>
+              <RocketIcon className="h-4 w-4" />
               <AlertTitle>Information</AlertTitle>
               <AlertDescription>
-                La transaction est en train d'être confirmée.
+                The transaction is being confirmed.
               </AlertDescription>
-            </Alert>}
-        {isConfirmed &&
+            </Alert>
+        )}
+
+        {showSuccess && (
             <Alert className="bg-lime-200 mt-5 mb-5">
-              <RocketIcon className="h-4 w-4"/>
-              <AlertTitle>Bravo !</AlertTitle>
+              <RocketIcon className="h-4 w-4" />
+              <AlertTitle>Congrats !</AlertTitle>
               <AlertDescription>
-                Transaction confirmée.
+                Transaction confirmed.
               </AlertDescription>
-            </Alert>}
+            </Alert>
+        )}
+
         {error && (
             <Alert className="bg-rose-200 mt-5 mb-5">
-              <TriangleAlertIcon className="h-4 w-4"/>
-              <AlertTitle>Erreur !</AlertTitle>
+              <TriangleAlertIcon className="h-4 w-4" />
+              <AlertTitle>Error !</AlertTitle>
               <AlertDescription>
-                Erreur : {error.shortMessage || error.message}
+                Error : {error.shortMessage || error.message}
               </AlertDescription>
             </Alert>
         )}

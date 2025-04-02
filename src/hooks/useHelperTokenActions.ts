@@ -13,7 +13,10 @@ export const useGetHelperTokenBalance = (helperTokenAddress: address, accountAdd
         abi: HELPERTOKEN_ABI,
         functionName: 'balanceOf',
         args: [accountAddress],
-        account: accountAddress
+        account: accountAddress,
+        query: {
+            enabled: !!accountAddress,
+        }
     });
 
     return {
@@ -33,7 +36,7 @@ export const useGetHelperTokenApprove = (helperTokenAddress: address, accountAdd
             writeContract({
                 address: helperTokenAddress as address,
                 abi: HELPERTOKEN_ABI,
-                functionName: "createJob",
+                functionName: "approve",
                 args: [SUPERHELPER_ADDRESS, amount],
                 account: accountAddress
             });

@@ -7,6 +7,18 @@ export interface Job {
     worker: address,
     description: string,
     stars: bigint,
-    reward: number,
+    reward: bigint,
     jobStatus: JobStatus,
 }
+
+export const mapContractDataToJob = (data: any): Job => {
+    return {
+        id: data[0] as bigint,
+        creator: data[1] as address,
+        worker: data[2] as address,
+        description: data[3],
+        stars: data[4] as bigint,
+        reward: data[5] as bigint,
+        jobStatus: Number(data[6]) as JobStatus,
+    };
+};
