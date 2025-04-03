@@ -8,8 +8,7 @@ export const config = getDefaultConfig({
   appName: 'SuperHelper Dapp',
   projectId: process.env.NEXT_PUBLIC_PROJECT_ID ?? "",
   chains: [
-    hardhat,
-    ...(process.env.ENABLE_TESTNETS === 'true' ? [sepolia] : []),
+    process.env.ENABLE_TESTNETS === 'true' ? sepolia : hardhat,
   ],
   ssr: true,
 });
