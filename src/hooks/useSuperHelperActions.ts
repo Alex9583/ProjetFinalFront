@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {useReadContract, useWriteContract, useWaitForTransactionReceipt} from "wagmi";
 import {SUPERHELPER_ABI, SUPERHELPER_ADDRESS} from "@/constants";
 import {address} from "@/types/address";

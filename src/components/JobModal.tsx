@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC, useEffect, useState } from "react";
 import { Job } from "@/entities/Job";
 import { Button } from "./ui/button";

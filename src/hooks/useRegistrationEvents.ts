@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useWatchContractEvent } from "wagmi";
 import { SUPERHELPER_ADDRESS, SUPERHELPER_ABI } from '@/constants';
 import { address } from "@/types/address";

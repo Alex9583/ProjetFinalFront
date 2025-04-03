@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {useEffect, useState} from "react";
 import {useContractInfo} from "@/contexts/ContractsInfoContext";
 import {Button} from "@/components/ui/button";

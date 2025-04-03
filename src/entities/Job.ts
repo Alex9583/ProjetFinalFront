@@ -11,7 +11,8 @@ export interface Job {
     jobStatus: JobStatus,
 }
 
-export const mapContractDataToJob = (data: any): Job => {
+export const mapContractDataToJob = (data: readonly [bigint, string, string, string, bigint, bigint, number]
+): Job => {
     return {
         id: data[0] as bigint,
         creator: data[1] as address,
