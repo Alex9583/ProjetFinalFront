@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.2...v1.2.3) (2025-04-03)
+
+
+### Bug Fixes
+
+* chains in wagmi client is now properly set ([fa0e515](https://github.com/Alex9583/ProjetFinalFront/commit/fa0e515e009ea52024567f3c1fcc7ed99cd2fd39))
+
 ## [1.2.2](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.1...v1.2.2) (2025-04-03)
 
 ## [1.2.1](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.0...v1.2.1) (2025-04-03)
