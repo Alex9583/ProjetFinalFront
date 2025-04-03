@@ -1,3 +1,4 @@
+import {useEffect, useState} from "react";
 import {useContractInfo} from "@/contexts/ContractsInfoContext";
 import {Button} from "@/components/ui/button";
 import {Alert, AlertTitle, AlertDescription} from "@/components/ui/alert";
@@ -11,6 +12,19 @@ const SuperHelperHome = () => {
     const {user, refetchUser} = useContractInfo();
     const {address} = useAccount();
     const {distributeToNewUser, isPending, hash, error, isConfirming, isConfirmed} = useDistributeToNewUser(address);
+
+    const [hasRegistered, setHasRegistered] = useState(false);
+
+    useEffect(() => {
+        if (isConfirmed) {
+            setHasRegistered(true);
+        }
+    }, [isConfirmed]);
+
+    useEffect(() => {
+        setHasRegistered(false);
+    }, [address]);
+
 
     const handleRegisterClick = () => {
         distributeToNewUser();
@@ -35,8 +49,8 @@ const SuperHelperHome = () => {
                         </AlertDescription>
                     </Alert>
 
-                    <Button onClick={handleRegisterClick} disabled={isPending || isConfirmed}>
-                        {isConfirmed ? "Done" : isPending ? "Registering..." : "Register"}
+                    <Button onClick={handleRegisterClick} disabled={isPending || hasRegistered}>
+                        {hasRegistered ? "Done" : isPending ? "Registering..." : "Register"}
                     </Button>
 
                     <TransactionAlert hash={hash} isConfirming={isConfirming} isConfirmed={isConfirmed} error={error}/>

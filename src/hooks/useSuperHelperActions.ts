@@ -3,8 +3,6 @@ import {SUPERHELPER_ABI, SUPERHELPER_ADDRESS} from "@/constants";
 import {address} from "@/types/address";
 import {Job, mapContractDataToJob} from "@/entities/Job";
 import {mapContractDataToUser, User} from "@/entities/User";
-import {useGetHelperTokenApprove} from "@/hooks/useHelperTokenActions";
-import {useContractInfo} from "@/contexts/ContractsInfoContext";
 
 export const useGetHelperTokenAddress = () => {
     const {data: helperTokenAddress, isError, error} = useReadContract({

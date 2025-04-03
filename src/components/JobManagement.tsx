@@ -147,7 +147,7 @@ const JobManagement = () => {
 
             <h2 className="text-2xl font-semibold mb-4">Jobs Taken</h2>
 
-            {addedJobs.length === 0 ? (
+            {takenJobs.length === 0 ? (
                 <p className="text-muted-foreground">No jobs taken.</p>
             ) : (
                 <div className="grid gap-4">
