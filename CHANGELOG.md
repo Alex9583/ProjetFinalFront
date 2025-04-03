@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Alex9583/ProjetFinalFront/compare/v1.1.0...v1.2.0) (2025-04-03)
+
+
+### Features
+
+* add JobManagement component to handle the job logic on the landing page ([e148af1](https://github.com/Alex9583/ProjetFinalFront/commit/e148af16a3d84570d5e33873b4c03428bc8188e5))
+
 # [1.1.0](https://github.com/Alex9583/ProjetFinalFront/compare/v1.0.0...v1.1.0) (2025-04-01)
 
 
