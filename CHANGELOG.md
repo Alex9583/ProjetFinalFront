@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.0...v1.2.1) (2025-04-03)
+
+
+### Bug Fixes
+
+* problem with taken job display and fix some rendering problem ([90670bf](https://github.com/Alex9583/ProjetFinalFront/commit/90670bf5626aa0a265a44747fc7ed9528f54534e))
+
 # [1.2.0](https://github.com/Alex9583/ProjetFinalFront/compare/v1.1.0...v1.2.0) (2025-04-03)
 
 
