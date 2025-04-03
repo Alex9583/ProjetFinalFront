@@ -7,7 +7,7 @@ export interface User {
     isRegistered: boolean,
 }
 
-export const mapContractDataToUser = (data: any): User => {
+export const mapContractDataToUser = (data: readonly [bigint, bigint, bigint, boolean]): User => {
     return {
         lastActivity: new Date(Number(data[0]) * 1000),
         nbJobCompleted: data[1] as bigint,
