@@ -1,4 +1,3 @@
-// @ts-nocheck
 import {useEffect, useState} from "react";
 import {useContractInfo} from "@/contexts/ContractsInfoContext";
 import {Button} from "@/components/ui/button";
@@ -51,8 +50,8 @@ const SuperHelperHome = () => {
                         </AlertDescription>
                     </Alert>
 
-                    <Button onClick={handleRegisterClick} disabled={isPending || hasRegistered}>
-                        {hasRegistered ? "Done" : isPending ? "Registering..." : "Register"}
+                    <Button onClick={handleRegisterClick} disabled={isPending || isConfirming || hasRegistered}>
+                        {hasRegistered ? "Done" : (isPending || isConfirming) ? "Registering..." : "Register"}
                     </Button>
 
                     <TransactionAlert hash={hash} isConfirming={isConfirming} isConfirmed={isConfirmed} error={error}/>

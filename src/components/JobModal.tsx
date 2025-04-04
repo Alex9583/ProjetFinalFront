@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { FC, useEffect, useState } from "react";
 import { Job } from "@/entities/Job";
 import { Button } from "./ui/button";
@@ -58,7 +57,7 @@ const JobModal: FC<JobModalProps> = ({ job, accountAddress, onClose, reloadJobs 
         }
 
         if (takeJobError) {
-            toast.error(`Error: ${takeJobError.shortMessage || takeJobError.message}`);
+            toast.error(`Error: ${takeJobError.message}`);
         }
     }, [isTakingConfirmed, takeJobError, reloadJobs, onClose]);
 
@@ -70,7 +69,7 @@ const JobModal: FC<JobModalProps> = ({ job, accountAddress, onClose, reloadJobs 
         }
 
         if (reviewJobError) {
-            toast.error(`Error: ${reviewJobError.shortMessage || reviewJobError.message}`);
+            toast.error(`Error: ${reviewJobError.message}`);
         }
     }, [isReviewConfirmed, reviewJobError, reloadJobs, onClose]);
 
