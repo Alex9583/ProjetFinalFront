@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.3...v1.2.4) (2025-04-04)
+
+
+### Bug Fixes
+
+* put public env config (no secrets) ([19c8f35](https://github.com/Alex9583/ProjetFinalFront/commit/19c8f35020853a4700770ff5abc3853b05c281df))
+
 ## [1.2.3](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.2...v1.2.3) (2025-04-03)
 
 

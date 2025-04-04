@@ -36,9 +36,9 @@ Create a `.env.local` file at the root of the project and fill in the following 
 
 ```env
 NEXT_PUBLIC_PROJECT_ID=<your_project_id>
-ENABLE_TESTNETS=<boolean_to_work_on_testnet_or_local>
-SUPERHELPER_ADDRESS=<address_of_smart_contract_superhelper>
-DEPLOYMENT_BLOCK=<deployment_block_of_smart_contract>
+NEXT_PUBLIC_ENABLE_TESTNETS=<boolean_to_work_on_testnet_or_local>
+NEXT_PUBLIC_SUPERHELPER_ADDRESS=<address_of_smart_contract_superhelper>
+NEXT_PUBLIC_DEPLOYMENT_BLOCK=<deployment_block_of_smart_contract>
 ```
 
 ---
