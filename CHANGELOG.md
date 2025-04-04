@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.4...v1.2.5) (2025-04-04)
+
+
+### Bug Fixes
+
+* balance display ([24e872e](https://github.com/Alex9583/ProjetFinalFront/commit/24e872efbd46aec6c12cfb55c10b788abf01574d))
+
 ## [1.2.4](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.3...v1.2.4) (2025-04-04)
 
 
