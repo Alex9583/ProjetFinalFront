@@ -5,7 +5,7 @@ import {SUPERHELPER_ADDRESS} from "@/constants";
 import {Job} from "@/entities/Job";
 import {address} from "@/types/address";
 
-const fromDeploymentBlock = process.env.DEPLOYMENT_BLOCK ? BigInt(process.env.DEPLOYMENT_BLOCK) : 0n;
+const fromDeploymentBlock = process.env.NEXT_PUBLIC_DEPLOYMENT_BLOCK ? BigInt(process.env.NEXT_PUBLIC_DEPLOYMENT_BLOCK) : 0n;
 
 export const useJobsEvents = () => {
     const [addedJobs, setAddedJobs] = useState<Job[]>([]);
