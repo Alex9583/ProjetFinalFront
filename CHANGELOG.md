@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.7...v1.3.0) (2025-04-04)
+
+
+### Features
+
+* add filter on job to see only yours when taken and add the possibility to cancel a job when you are the creator ([e657195](https://github.com/Alex9583/ProjetFinalFront/commit/e657195314161765c8c75c7c8b22584b83392eb5))
+
 ## [1.2.7](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.6...v1.2.7) (2025-04-04)
 
 ## [1.2.6](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.5...v1.2.6) (2025-04-04)
