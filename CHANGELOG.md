@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.5...v1.2.6) (2025-04-04)
+
+
+### Bug Fixes
+
+* change wagmi for viem log method to avoid rpc restriction ([ef921de](https://github.com/Alex9583/ProjetFinalFront/commit/ef921debefb59feb7d66f7ba522d129820ff5237))
+
 ## [1.2.5](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.4...v1.2.5) (2025-04-04)
 
 
