@@ -1,13 +1,13 @@
 import { FC, useEffect, useState } from "react";
-import { type BaseError } from 'wagmi';
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { RocketIcon, TriangleAlertIcon } from "lucide-react";
+import {type WriteContractErrorType} from "@wagmi/core";
 
 type TransactionAlertProps = {
   hash?: string;
   isConfirming?: boolean;
   isConfirmed?: boolean;
-  error?: BaseError;
+  error?: WriteContractErrorType | null;
 };
 
 const TransactionAlert: FC<TransactionAlertProps> = ({ hash, isConfirming, isConfirmed, error }) => {
@@ -65,7 +65,7 @@ const TransactionAlert: FC<TransactionAlertProps> = ({ hash, isConfirming, isCon
               <TriangleAlertIcon className="h-4 w-4" />
               <AlertTitle>Error !</AlertTitle>
               <AlertDescription>
-                Error : {error.shortMessage || error.message}
+                Error : {error.message}
               </AlertDescription>
             </Alert>
         )}

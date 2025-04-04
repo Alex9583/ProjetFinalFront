@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { FC, useEffect, useState } from "react";
 import { Job } from "@/entities/Job";
 import { Button } from "./ui/button";
@@ -10,11 +9,26 @@ import {
     DialogTitle,
     DialogFooter,
 } from "./ui/dialog";
-import { useTakeJob, useCompleteAndReviewJob } from "@/hooks/useSuperHelperActions";
+import {useTakeJob, useCompleteAndReviewJob, useCancelJob} from "@/hooks/useSuperHelperActions";
 import { address } from "@/types/address";
 import { toast } from "sonner";
 import TransactionAlert from "@/components/TransactionAlert";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import {Query, useQueryClient} from "@tanstack/react-query";
+import {useContractInfo} from "@/contexts/ContractsInfoContext";
+import {useAccount} from "wagmi";
+
+type WagmiReadContractQueryKey = [
+    'readContract',
+    {
+        address?: string;
+        functionName?: string;
+        args?: string[];
+        chainId?: number;
+    }
+];
+
+type WagmiReadContractQuery = Query<unknown, Error, unknown, WagmiReadContractQueryKey>;
 
 type JobModalProps = {
     job: Job | null;
@@ -33,6 +47,18 @@ const JobModal: FC<JobModalProps> = ({ job, accountAddress, onClose, reloadJobs 
         hash: reviewJobHash,
         isConfirming: isReviewConfirming
     } = useCompleteAndReviewJob(accountAddress);
+    const {
+        cancelJob,
+        hash: cancelJobHash,
+        isPending: isCancelPending,
+        isConfirming: isCancelConfirming,
+        isConfirmed: isCancelConfirmed,
+        error: cancelJobError
+    } = useCancelJob(accountAddress);
+    const {helperTokenAddress} = useContractInfo();
+    const {address: userAddress} = useAccount();
+
+    const queryClient = useQueryClient();
 
     const [rating, setRating] = useState<number>(0);
 
@@ -50,6 +76,12 @@ const JobModal: FC<JobModalProps> = ({ job, accountAddress, onClose, reloadJobs 
         }
     };
 
+    const handleCancelJob = () => {
+        if (job) {
+            cancelJob(job.id);
+        }
+    };
+
     useEffect(() => {
         if (isTakingConfirmed) {
             toast.success('Job successfully taken!');
@@ -58,7 +90,7 @@ const JobModal: FC<JobModalProps> = ({ job, accountAddress, onClose, reloadJobs 
         }
 
         if (takeJobError) {
-            toast.error(`Error: ${takeJobError.shortMessage || takeJobError.message}`);
+            toast.error(`Error: ${takeJobError.message}`);
         }
     }, [isTakingConfirmed, takeJobError, reloadJobs, onClose]);
 
@@ -70,9 +102,28 @@ const JobModal: FC<JobModalProps> = ({ job, accountAddress, onClose, reloadJobs 
         }
 
         if (reviewJobError) {
-            toast.error(`Error: ${reviewJobError.shortMessage || reviewJobError.message}`);
+            toast.error(`Error: ${reviewJobError.message}`);
         }
     }, [isReviewConfirmed, reviewJobError, reloadJobs, onClose]);
+
+    useEffect(() => {
+        if (isCancelConfirmed) {
+            toast.success("Job canceled successfully!");
+            reloadJobs();
+            queryClient.invalidateQueries({
+                predicate: (query: WagmiReadContractQuery) =>
+                    query.queryKey[0] === 'readContract' &&
+                    query.queryKey[1]?.address?.toLowerCase() === helperTokenAddress.toLowerCase() &&
+                    query.queryKey[1]?.functionName === 'balanceOf' &&
+                    query.queryKey[1]?.args?.[0]?.toLowerCase() === userAddress?.toLowerCase()
+            });
+            onClose();
+        }
+
+        if (cancelJobError) {
+            toast.error(`Error: ${cancelJobError.message}`);
+        }
+    }, [isCancelConfirmed, cancelJobError, reloadJobs, onClose]);
 
     return (
         <Dialog open={!!job} onOpenChange={onClose}>
@@ -95,10 +146,10 @@ const JobModal: FC<JobModalProps> = ({ job, accountAddress, onClose, reloadJobs 
                         </div>
 
                         <TransactionAlert
-                            hash={takeJobHash || reviewJobHash}
-                            isConfirming={isTakingConfirming || isReviewConfirming}
-                            isConfirmed={isTakingConfirmed || isReviewConfirmed}
-                            error={takeJobError || reviewJobError}
+                            hash={takeJobHash || reviewJobHash || cancelJobHash}
+                            isConfirming={isTakingConfirming || isReviewConfirming || isCancelConfirming}
+                            isConfirmed={isTakingConfirmed || isReviewConfirmed || isCancelConfirmed}
+                            error={takeJobError || reviewJobError || cancelJobError}
                         />
 
                         <DialogFooter className="mt-4 justify-end gap-2">
@@ -106,10 +157,18 @@ const JobModal: FC<JobModalProps> = ({ job, accountAddress, onClose, reloadJobs 
                                 Cancel
                             </Button>
 
-                            {job.jobStatus === 0 && (
-                                <Button onClick={() => takeJob(job.id)} disabled={isTakingPending}>
-                                    {isTakingPending ? "Confirming..." : "Take the Job"}
+                            {isCreator && job.jobStatus === 0 ? (
+                                <Button
+                                    disabled={isCancelPending || isCancelConfirming}
+                                    onClick={handleCancelJob}>
+                                    {isCancelPending || isCancelConfirming ? "Canceling..." : "Cancel Job"}
                                 </Button>
+                            ) : (
+                                job.jobStatus === 0 && (
+                                    <Button onClick={() => takeJob(job.id)} disabled={isTakingPending}>
+                                        {isTakingPending ? "Confirming..." : "Take the Job"}
+                                    </Button>
+                                )
                             )}
 
                             {job.jobStatus === 1 && isWorker && (

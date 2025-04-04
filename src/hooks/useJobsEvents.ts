@@ -4,6 +4,7 @@ import {parseAbiItem} from "viem";
 import {SUPERHELPER_ADDRESS} from "@/constants";
 import {Job} from "@/entities/Job";
 import {address} from "@/types/address";
+import {useAccount} from "wagmi";
 
 const fromDeploymentBlock = process.env.NEXT_PUBLIC_DEPLOYMENT_BLOCK ? BigInt(process.env.NEXT_PUBLIC_DEPLOYMENT_BLOCK) : 0n;
 
@@ -11,6 +12,8 @@ export const useJobsEvents = () => {
     const [addedJobs, setAddedJobs] = useState<Job[]>([]);
     const [takenJobs, setTakenJobs] = useState<Job[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+
+    const {address: userAddress} = useAccount();
 
     const loadJobs = useCallback(async () => {
         if (isLoading) return;
@@ -86,7 +89,19 @@ export const useJobsEvents = () => {
             .filter(job => !finishedIds.has(Number(job.id)));
 
         setAddedJobs(allJobs.filter(job => job.jobStatus === 0));
-        setTakenJobs(allJobs.filter(job => job.jobStatus === 1));
+        if (userAddress) {
+            setTakenJobs(
+                allJobs.filter(job =>
+                        job.jobStatus === 1 && (
+                            job.creator.toLowerCase() === userAddress.toLowerCase() ||
+                            job.worker.toLowerCase() === userAddress.toLowerCase()
+                        )
+                )
+            );
+        } else {
+            setTakenJobs([]);
+        }
+
 
         setIsLoading(false);
     }, []);

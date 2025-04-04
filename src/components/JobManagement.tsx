@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {useState, useEffect, useMemo, useCallback} from "react";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
@@ -9,12 +8,25 @@ import {useCreateJob} from "@/hooks/useSuperHelperActions";
 import {useJobsEvents} from "@/hooks/useJobsEvents";
 import {useAccount} from "wagmi";
 import {toast} from "sonner";
-import {useQueryClient} from "@tanstack/react-query";
+import {Query, useQueryClient} from "@tanstack/react-query";
 import {useGetHelperTokenApprove} from "@/hooks/useHelperTokenActions";
 import {useContractInfo} from "@/contexts/ContractsInfoContext";
 import JobCard from "@/components/JobCard";
 import JobModal from "@/components/JobModal";
 import {Job} from "@/entities/Job";
+
+type WagmiReadContractQueryKey = [
+    'readContract',
+    {
+        address?: string;
+        functionName?: string;
+        args?: string[];
+        chainId?: number;
+    }
+];
+
+type WagmiReadContractQuery = Query<unknown, Error, unknown, WagmiReadContractQueryKey>;
+
 
 const JobManagement = () => {
     const {helperTokenAddress} = useContractInfo();
@@ -68,7 +80,7 @@ const JobManagement = () => {
         if (isCreateConfirmed) {
             reloadJobs();
             queryClient.invalidateQueries({
-                predicate: query =>
+                predicate: (query: WagmiReadContractQuery) =>
                     query.queryKey[0] === 'readContract' &&
                     query.queryKey[1]?.address?.toLowerCase() === helperTokenAddress.toLowerCase() &&
                     query.queryKey[1]?.functionName === 'balanceOf' &&

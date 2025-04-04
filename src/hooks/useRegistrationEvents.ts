@@ -1,15 +1,22 @@
-// @ts-nocheck
 import { useEffect, useRef } from "react";
 import { publicClient } from "@/utils/client";
 import { parseAbiItem } from "viem";
 import { SUPERHELPER_ADDRESS } from "@/constants";
 import { address } from "@/types/address";
-import { useQueryClient } from "@tanstack/react-query";
+import {Query, useQueryClient} from "@tanstack/react-query";
 import { useContractInfo } from "@/contexts/ContractsInfoContext";
 
-const fromDeploymentBlock = process.env.NEXT_PUBLIC_DEPLOYMENT_BLOCK
-    ? BigInt(process.env.NEXT_PUBLIC_DEPLOYMENT_BLOCK)
-    : BigInt(0);
+type WagmiReadContractQueryKey = [
+    'readContract',
+    {
+        address?: string;
+        functionName?: string;
+        args?: string[];
+        chainId?: number;
+    }
+];
+
+type WagmiReadContractQuery = Query<unknown, Error, unknown, WagmiReadContractQueryKey>;
 
 type FirstRegistrationEventProps = {
     userAddress: address | undefined;
@@ -17,6 +24,10 @@ type FirstRegistrationEventProps = {
     callback: () => void;
     hasRegistered: boolean;
 };
+
+const fromDeploymentBlock = process.env.NEXT_PUBLIC_DEPLOYMENT_BLOCK
+    ? BigInt(process.env.NEXT_PUBLIC_DEPLOYMENT_BLOCK)
+    : BigInt(0);
 
 export const useFirstRegistrationEvent = ({
                                               userAddress,
@@ -54,7 +65,7 @@ export const useFirstRegistrationEvent = ({
                 await callback();
 
                 queryClient.invalidateQueries({
-                    predicate: (query) =>
+                    predicate: (query: WagmiReadContractQuery) =>
                         query.queryKey[0] === "readContract" &&
                         query.queryKey[1]?.address?.toLowerCase() === helperTokenAddress.toLowerCase() &&
                         query.queryKey[1]?.functionName === "balanceOf" &&

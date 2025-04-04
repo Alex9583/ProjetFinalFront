@@ -1,9 +1,11 @@
-// @ts-nocheck
 import {useReadContract, useWriteContract, useWaitForTransactionReceipt} from "wagmi";
 import {SUPERHELPER_ABI, SUPERHELPER_ADDRESS} from "@/constants";
 import {address} from "@/types/address";
 import {Job, mapContractDataToJob} from "@/entities/Job";
 import {mapContractDataToUser, User} from "@/entities/User";
+
+type jobContractData = readonly [bigint, string, string, string, bigint, bigint, number];
+type userContractData = readonly [bigint, bigint, bigint, boolean];
 
 export const useGetHelperTokenAddress = () => {
     const {data: helperTokenAddress, isError, error} = useReadContract({
@@ -23,7 +25,7 @@ export const useGetJobById = (jobId: bigint) => {
         args: [jobId],
     });
 
-    const job = data ? mapContractDataToJob(data) : undefined;
+    const job = data ? mapContractDataToJob(data as jobContractData) : undefined;
 
 
     return {job: job as Job, isError, error, isLoading};
@@ -40,7 +42,7 @@ export const useGetUserInfo = (userAddress: address | undefined) => {
         }
     });
 
-    const user = data ? mapContractDataToUser(data) : undefined;
+    const user = data ? mapContractDataToUser(data as userContractData) : undefined;
 
     return {user: user as User, isError, error, isLoading, refetch};
 };
