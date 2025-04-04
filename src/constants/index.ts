@@ -47,7 +47,7 @@ export const SUPERHELPER_ABI = [
         "anonymous": false,
         "inputs": [
             {
-                "indexed": false,
+                "indexed": true,
                 "internalType": "address",
                 "name": "newUser",
                 "type": "address"
@@ -82,12 +82,6 @@ export const SUPERHELPER_ABI = [
                 "internalType": "uint256",
                 "name": "id",
                 "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "bool",
-                "name": "isFinished",
-                "type": "bool"
             }
         ],
         "name": "JobAdded",

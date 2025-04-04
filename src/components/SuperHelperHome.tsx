@@ -35,6 +35,7 @@ const SuperHelperHome = () => {
         userAddress: address,
         isRegistered: user?.isRegistered,
         callback: refetchUser,
+        hasRegistered,
     });
 
     return (
