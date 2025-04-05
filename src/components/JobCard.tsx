@@ -18,6 +18,8 @@ const getStatusLabel = (status: JobStatus): string => {
             return "Completed";
         case JobStatus.CANCELLED:
             return "Cancelled";
+        case JobStatus.DISPUTED:
+            return "Disputed";
         default:
             return "Unknown";
     }

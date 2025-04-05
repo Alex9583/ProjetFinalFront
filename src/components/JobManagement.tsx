@@ -14,6 +14,7 @@ import {useContractInfo} from "@/contexts/ContractsInfoContext";
 import JobCard from "@/components/JobCard";
 import JobModal from "@/components/JobModal";
 import {Job} from "@/entities/Job";
+import DisputedJobModal from "@/components/DisputedJobModal";
 
 type WagmiReadContractQueryKey = [
     'readContract',
@@ -29,9 +30,9 @@ type WagmiReadContractQuery = Query<unknown, Error, unknown, WagmiReadContractQu
 
 
 const JobManagement = () => {
-    const {helperTokenAddress} = useContractInfo();
+    const {helperTokenAddress, isOwner} = useContractInfo();
     const {address: userAddress} = useAccount();
-    const {addedJobs, takenJobs, reloadJobs} = useJobsEvents();
+    const {addedJobs, takenJobs, disputedJobs, reloadJobs} = useJobsEvents();
     const {
         createJob,
         hash: createJobHash,
@@ -52,10 +53,16 @@ const JobManagement = () => {
     const [reward, setReward] = useState("");
     const [isApproving, setIsApproving] = useState(false);
     const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+    const [selectedDisputedJob, setSelectedDisputedJob] = useState<Job | null>(null);
 
     const closeModal = useCallback(() => setSelectedJob(null), []);
+    const closeDisputeModal = useCallback(() => setSelectedDisputedJob(null), []);
 
     const queryClient = useQueryClient();
+
+    const handleSelectDisputedJob = useCallback((job: Job) => {
+        setSelectedDisputedJob(job);
+    }, []);
 
     const handleCreateJob = useCallback(() => {
         if (!description || !reward) {
@@ -169,6 +176,29 @@ const JobManagement = () => {
                     ))}
                 </div>
             )}
+
+            {isOwner && (<>
+                    <Separator className="my-8"/>
+
+                    <h2 className="text-2xl font-semibold mb-4">Jobs Disputed</h2>
+
+                    {disputedJobs.length === 0 ? (
+                        <p className="text-muted-foreground">No jobs disputed.</p>
+                    ) : (
+                        <div className="grid gap-4">
+                            {disputedJobs.map(job => (
+                                <JobCard key={job.id.toString()} job={job} onSelect={handleSelectDisputedJob}/>
+                            ))}
+                        </div>
+                    )}</>
+            )}
+
+            <DisputedJobModal
+                job={selectedDisputedJob}
+                accountAddress={userAddress}
+                onClose={closeDisputeModal}
+                reloadJobs={reloadJobs}
+            />
 
             <JobModal
                 job={selectedJob}

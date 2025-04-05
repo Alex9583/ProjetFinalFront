@@ -44,6 +44,28 @@ export const SUPERHELPER_ABI = [
         "type": "error"
     },
     {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+            }
+        ],
+        "name": "OwnableInvalidOwner",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            }
+        ],
+        "name": "OwnableUnauthorizedAccount",
+        "type": "error"
+    },
+    {
         "anonymous": false,
         "inputs": [
             {
@@ -135,12 +157,12 @@ export const SUPERHELPER_ABI = [
             },
             {
                 "indexed": false,
-                "internalType": "uint256",
+                "internalType": "uint8",
                 "name": "stars",
-                "type": "uint256"
+                "type": "uint8"
             }
         ],
-        "name": "JobIsCompletedAndPaid",
+        "name": "JobCompletedAndPaid",
         "type": "event"
     },
     {
@@ -172,12 +194,37 @@ export const SUPERHELPER_ABI = [
             },
             {
                 "indexed": false,
-                "internalType": "uint256",
+                "internalType": "uint8",
                 "name": "stars",
+                "type": "uint8"
+            }
+        ],
+        "name": "JobCompletedButNotPaid",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "creator",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "worker",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "id",
                 "type": "uint256"
             }
         ],
-        "name": "JobIsCompletedButNotPaid",
+        "name": "JobDisputed",
         "type": "event"
     },
     {
@@ -197,6 +244,25 @@ export const SUPERHELPER_ABI = [
             }
         ],
         "name": "JobTaken",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "previousOwner",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "OwnershipTransferred",
         "type": "event"
     },
     {
@@ -223,6 +289,11 @@ export const SUPERHELPER_ABI = [
                 "internalType": "uint8",
                 "name": "_rating",
                 "type": "uint8"
+            },
+            {
+                "internalType": "bool",
+                "name": "_isDisputed",
+                "type": "bool"
             }
         ],
         "name": "completeAndReviewJob",
@@ -251,6 +322,24 @@ export const SUPERHELPER_ABI = [
     {
         "inputs": [],
         "name": "distributeToNewUser",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_jobId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "_isResolved",
+                "type": "bool"
+            }
+        ],
+        "name": "handleDisputedJob",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -326,6 +415,26 @@ export const SUPERHELPER_ABI = [
         "type": "function"
     },
     {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
         "inputs": [
             {
                 "internalType": "uint256",
@@ -334,6 +443,19 @@ export const SUPERHELPER_ABI = [
             }
         ],
         "name": "takeJob",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "transferOwnership",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

@@ -60,19 +60,20 @@ The frontend communicates with the `SuperHelper` smart contract, which supports 
 
 - **Registration** of new users.
 - **Creation, assignment, and full management** of token-paid jobs (HELP).
-- Task status follow-up (**created, assigned, completed, canceled**).
+- Task status follow-up (**created, assigned, completed, canceled, disputed**).
 - Rewarding users with badges (BRONZE, SILVER, GOLD).
 
 ### Events available via smart contract:
 
-| Event                          | Description                                                    |
-|--------------------------------|----------------------------------------------------------------|
-| `FirstRegistration`            | Issued during the very first registration of a user            |
-| `JobAdded`                     | When a new job is created                                      |
-| `JobTaken`                     | When a job is taken by a user                                  |
-| `JobIsCompletedAndPaid`        | Job successfully completed and payment issued                  |
-| `JobIsCompletedButNotPaid`     | Job completed but payment not issued due to poor rating        |
-| `JobCanceled`                  | When the creator cancels their job                             |
+| Event                    | Description                                                      |
+|--------------------------|------------------------------------------------------------------|
+| `FirstRegistration`      | Issued during the very first registration of a user              |
+| `JobAdded`               | When a new job is created                                        |
+| `JobTaken`               | When a job is taken by a user                                    |
+| `JobCompletedAndPaid`    | Job successfully completed and payment issued                    |
+| `JobCompletedButNotPaid` | Job completed but payment not issued due to dispute not resolved |
+| `JobCanceled`            | When the creator cancels its job                                 |
+| `JobDisputed`            | When the creator marks the job as disputed                       |
 
 ---
 
