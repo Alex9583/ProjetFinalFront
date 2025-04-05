@@ -1,3 +1,11 @@
+## [1.3.2](https://github.com/Alex9583/ProjetFinalFront/compare/v1.3.1...v1.3.2) (2025-04-05)
+
+
+### Bug Fixes
+
+* define chain for viem and sepolia to get logs ([0cabb45](https://github.com/Alex9583/ProjetFinalFront/commit/0cabb45a817110989accca9fd4589a09a1be8b0c))
+* wagmi use now the proper sepolia rpc ([31c619a](https://github.com/Alex9583/ProjetFinalFront/commit/31c619ad438ca0ca2e1c0b03c1b4945ede74f832))
+
 ## [1.3.1](https://github.com/Alex9583/ProjetFinalFront/compare/v1.3.0...v1.3.1) (2025-04-05)
 
 
