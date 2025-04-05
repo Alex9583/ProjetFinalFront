@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/Alex9583/ProjetFinalFront/compare/v1.3.0...v1.3.1) (2025-04-05)
+
+
+### Bug Fixes
+
+* define rpc url variable for sepolia testnet ([b015933](https://github.com/Alex9583/ProjetFinalFront/commit/b015933be54a916047ffd54a97d9db90b4b089cc))
+
 # [1.3.0](https://github.com/Alex9583/ProjetFinalFront/compare/v1.2.7...v1.3.0) (2025-04-04)
 
 
