@@ -2,5 +2,6 @@ export enum JobStatus {
     CREATED,
     TAKEN,
     COMPLETED,
-    CANCELLED
+    CANCELLED,
+    DISPUTED
 }

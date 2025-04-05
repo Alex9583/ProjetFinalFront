@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/Alex9583/ProjetFinalFront/compare/v1.3.2...v1.4.0) (2025-04-05)
+
+
+### Features
+
+* add disputed logic such as disputed resolution with smart contract owner and the modal associated ([5e3fc4a](https://github.com/Alex9583/ProjetFinalFront/commit/5e3fc4a8271920e7f561cadcc48e63f2de8d99b6))
+
 ## [1.3.2](https://github.com/Alex9583/ProjetFinalFront/compare/v1.3.1...v1.3.2) (2025-04-05)
 
 

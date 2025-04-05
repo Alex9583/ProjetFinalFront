@@ -47,6 +47,23 @@ export const useGetUserInfo = (userAddress: address | undefined) => {
     return {user: user as User, isError, error, isLoading, refetch};
 };
 
+export const useGetIsOwner = (userAddress: address | undefined) => {
+    const {data, isError, error, isLoading} = useReadContract({
+        address: SUPERHELPER_ADDRESS as address,
+        abi: SUPERHELPER_ABI,
+        functionName: 'owner',
+        query: {
+            enabled: !!userAddress,
+        }
+    });
+
+    const typedData = data as address | undefined;
+
+    const isOwner = typedData ? typedData === userAddress : false;
+
+    return {isOwner, isError, error, isLoading};
+}
+
 export const useCreateJob = (accountAddress: address | undefined) => {
     const {data: hash, error, writeContract, isPending} = useWriteContract();
     const {isLoading: isConfirming, isSuccess: isConfirmed} = useWaitForTransactionReceipt({hash});
@@ -108,19 +125,38 @@ export const useCompleteAndReviewJob = (accountAddress: address | undefined) => 
     const {data: hash, error, writeContract, isPending} = useWriteContract();
     const {isLoading: isConfirming, isSuccess: isConfirmed} = useWaitForTransactionReceipt({hash});
 
-    const completeAndReviewJob = (jobId: bigint, rating: number) => {
+    const completeAndReviewJob = (jobId: bigint, rating: number, isDisputed: boolean) => {
         if (accountAddress) {
             writeContract({
                 address: SUPERHELPER_ADDRESS as address,
                 abi: SUPERHELPER_ABI,
                 functionName: 'completeAndReviewJob',
-                args: [jobId, rating],
+                args: [jobId, rating, isDisputed],
                 account: accountAddress
             });
         }
     };
 
     return {completeAndReviewJob, hash, error, isPending, isConfirming, isConfirmed};
+};
+
+export const useHandleDisputedJob = (accountAddress: address | undefined) => {
+    const {data: hash, error, writeContract, isPending} = useWriteContract();
+    const {isLoading: isConfirming, isSuccess: isConfirmed} = useWaitForTransactionReceipt({hash});
+
+    const handleDisputedJob = (jobId: bigint, isResolved: boolean) => {
+        if (accountAddress) {
+            writeContract({
+                address: SUPERHELPER_ADDRESS as address,
+                abi: SUPERHELPER_ABI,
+                functionName: 'handleDisputedJob',
+                args: [jobId, isResolved],
+                account: accountAddress
+            });
+        }
+    };
+
+    return {handleDisputedJob, hash, error, isPending, isConfirming, isConfirmed};
 };
 
 export const useDistributeToNewUser = (accountAddress: address | undefined) => {

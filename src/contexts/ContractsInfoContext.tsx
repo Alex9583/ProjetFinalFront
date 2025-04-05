@@ -1,6 +1,6 @@
 'use client'
 import React, {createContext, useContext, ReactNode, useEffect} from "react";
-import {useGetHelperTokenAddress, useGetUserInfo} from "@/hooks/useSuperHelperActions";
+import {useGetHelperTokenAddress, useGetIsOwner, useGetUserInfo} from "@/hooks/useSuperHelperActions";
 import {toast} from "sonner";
 import {address} from "@/types/address";
 import {User} from "@/entities/User";
@@ -11,6 +11,7 @@ type ContractsInfoContextType = {
     helperTokenAddress: address;
     user: User | undefined;
     refetchUser: () => void;
+    isOwner: boolean;
 };
 
 const ContractsInfoContext = createContext<ContractsInfoContextType | undefined>(undefined);
@@ -23,6 +24,7 @@ export const ContractsInfoProvider = ({children}: { children: ReactNode }) => {
     } = useGetHelperTokenAddress();
     const {address} = useAccount();
     const {user, isError: isErrorGetUserInfo, error: errorGetUserInfo, refetch} = useGetUserInfo(address);
+    const {isOwner, isError: isErrorGetIsOwner, error: errorGetIsOwner} = useGetIsOwner(address);
 
     useEffect(() => {
         if (isErrorGetHelperTokenAddress && errorGetHelperTokenAddress) {
@@ -36,12 +38,19 @@ export const ContractsInfoProvider = ({children}: { children: ReactNode }) => {
         }
     }, [isErrorGetUserInfo, errorGetUserInfo]);
 
+    useEffect(() => {
+        if (isErrorGetIsOwner && errorGetIsOwner) {
+            toast.error(`Error while fetching owner info : ${errorGetIsOwner.message}`);
+        }
+    }, [isErrorGetIsOwner, errorGetIsOwner]);
+
 
     return (
         <ContractsInfoContext.Provider value={{
             helperTokenAddress: helperTokenAddress,
             user: user,
-            refetchUser: refetch
+            refetchUser: refetch,
+            isOwner
         }}>
             {children}
         </ContractsInfoContext.Provider>
